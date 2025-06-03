@@ -1,6 +1,5 @@
 
 using Blog.Administrator.Repository;
-using Blog.USER.Repository;
 using Blog_DatabaseAccess.SqlDataAccess;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Blog.Administrator\Blog.Administrator.csproj" />
     <ProjectReference Include="..\Blog.Author\Blog.Author.csproj" />
-    <ProjectReference Include="..\Blog.USER\Blog.USER.csproj" />
     <ProjectReference Include="..\Blog_DatabaseAccess\Blog_DatabaseAccess.csproj" />
   </ItemGroup>
 
