@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_AdminCRUDLayout";
+}
+@model Blog.Administrator.Models.Category
+
+
+<div class="row d-flex justify-content-center align-items-center w-100 ms-2">
+    <div class="col-md-10 col-12 m-0 p-0">
+        <form method="post" asp-action="EditCategory" enctype="multipart/form-data" class="p-4">
+            <h3 class="text-white text fw-bold w-100">Edit Category:</h3>
+
+            <input asp-for="@Model.CategoryID" type="text" hidden>
+
+            <div class="row mb-3 px-2 w-100">
+                <div class="row px-2">
+                    <p class="alert_message error rounded">This is the error message</p>
+                </div>
+                <div class="row">
+                    <input asp-for="CategoryTitle" type="text" class="form-control mb-2 w-100" id="txt_Title" placeholder="Title">
+                </div>
+                <div class="row">
+                    <textarea asp-for="CategoryDescription" class="form-control mb-2 h-100 w-100" placeholder="Description" id="txt_TextArea"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="row mb-2 ps-2 btn_submit w-100">
+                <div class="col-md-4 col-11 m-0 p-0 ">
+                    <input type="submit" class="form-control" id="btn" value="Edit Category" />
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+

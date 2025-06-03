@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_AdminCRUDLayout";
+}
+
+<div class="row d-flex justify-content-center align-items-center h-100 w-100 ms-2">
+    <div class="col-md-7 col-12 m-0 p-0">
+        <form method="post" action="" enctype="multipart/form-data" class="p-4">
+            <h3 class="text-white text fw-bold w-100">Edit Post:</h3>
+
+            <div class="row mb-3 px-2 w-100">
+
+                <div class="row mb-1 ">
+                    <p class="alert_message error rounded">This is the error message</p>
+                </div>
+
+                <div class="row mb-1">
+                    <input type="text" class="form-control mb-2 w-100" id="txt_Title" placeholder="Title">
+                </div>
+                <div class="row mb-1 h-100">
+                    <select id="myPostDropdown" class=" mb-2 w-100 rounded">
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="0">Wild Life</option>
+                        <option value="1">Travel</option>
+
+                    </select>
+                </div>
+                <div class="row txt_post_body">
+                    <textarea class="form-control mb-2 h-100 w-100" placeholder="Body" id="txt_TextArea"></textarea>
+                </div>
+
+                <div class="row mt-2 mb-1">
+                    <div class="col-5 m-0 p-0">
+                        <input type="checkbox" name="featured" id="cbx_featured" placeholder="Featured">
+                        <label for="cbx_featured" class="text-white fs-6" style="color: rgba(116, 116, 116, 0.795);">Featured</label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 w-100 ">
+                    <div class="col-md-6 col-8 m-0 p-0">
+                        <label class="text-start fs-6 m-0 p-0 avatar_text">Add Thumbnail</label>
+                        <input type="file" class="form-control mt-1 inputs" id="file">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-2 ps-2 btn_submit w-100">
+                <div class="col-md-3 col-11 m-0 p-0 ">
+                    <button class="form-control" id="btn" type="submit" href="#">Edit Post</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+

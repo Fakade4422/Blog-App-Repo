@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "_SignAuthLayout";
+}
+
+<div class="container-fluid">
+    <form method="post" class="p-4">
+        <h3 class="text-white text fw-bold w-100">Sign-In:</h3>
+
+
+        <div class="row mb-3 px-2">
+            <input type="text" class="form-control mb-2 w-100" id="username" placeholder="Username or Email"><br>
+            <input type="text" class="form-control w-100 inputs" id="password" placeholder="Password"><br>
+        </div>
+        <div class="row px-2">
+            <p class="alert_message error rounded">This is the error message</p>
+        </div>
+        <div class="row mb-2 ps-2 btn_submit w-100">
+            <div class="col-md-4 col-11 m-0 p-0 ">
+                <button class="form-control" id="btn" type="submit" href="/index.html">Sign-In</button>
+            </div>
+        </div>
+        <div class="row">
+            <label>Don't have an account? <a asp-controller="Home" asp-action="SignUp" class="text-decoration-underline" id="sign_upLink"> Sign-Up</a></label>
+        </div>
+    </form>
+
+</div>
+

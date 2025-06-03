@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+@model IEnumerable<Blog.Administrator.Models.tblUser>
+
+<section class="adminBody">
+    <div class="container admin_outline_border p-4">
+        <div class="row">
+
+            <div class="col-3 px-5 py-3">
+                <!--Left Side-->
+                <div class="row aside_background d-flex align-items-center">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="AddPost"><i class="bi bi-pencil pe-3"></i> Add Post</a>
+                </div>
+                <div class="row aside_background">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="ManagePosts"><i class="bi bi-folder2-open pe-3"></i> Manage Post</a>
+                </div>
+                <div class="row aside_background">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="AddUser"><i class="bi bi-person-add pe-3"></i> Add User</a>
+                </div>
+                <div class="row aside_background">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="ManageUser"><i class="bi bi-people-fill pe-3"></i> Manage User</a>
+                </div>
+                <div class="row aside_background">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="AddCategory"><i class="bi bi-pencil-square pe-3"></i> Add Category</a>
+                </div>
+                <div class="row aside_background">
+                    <a class="d-flex align-items-center ps-5" asp-controller="Admin" asp-action="ManageCategory"><i class="bi bi-menu-button-wide pe-3"></i> Manage Categories</a>
+                </div>
+            </div>
+
+            <div class="col-9 px-5 py-3">
+                <!--Right Side-->
+                <div class="row mb-3">
+                    <!--Heading-->
+                    <h1 class="text-white m-0 p-0">Manage User</h1>
+                </div>
+
+                <div class="row d-flex align-items-center ">
+                    <!--Table Heading-->
+                    <div class="col-3 admin_tableTop_Background">
+                        <label class="text-white">Name</label>
+                    </div>
+                    <div class="col-3 admin_tableTop_Background">
+                        <label class="text-white">Username</label>
+                    </div>
+                    <div class="col-2 admin_tableTop_Background">
+                        <label class="text-white">Edit</label>
+                    </div>
+                    <div class="col-2 admin_tableTop_Background">
+                        <label class="text-white">Delete</label>
+                    </div>
+                    <div class="col-2 admin_tableTop_Background">
+                        <label class="text-white">Admin</label>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center ">
+                    <!--data on posts etc-->
+                    @foreach (var obj in Model)
+                    {
+                        <div class="row admin_data_for_tbl_User mx-0 mt-0 mb-1 p-0">
+                            <!--row by row data in the table-->
+                            <div class="col-3 right_bd d-flex align-items-center justify-content-start">
+                                <label class="text-white">@obj.Name @obj.Surname</label>
+                            </div>
+                            <div class="col-3 right_bd d-flex align-items-center justify-content-start">
+                                <label class="text-white">@obj.Username</label>
+                            </div>
+                            <div class="col-2 right_bd d-flex align-items-center justify-content-center">
+                                <a asp-controller="Admin" asp-action="EditUser" asp-route-ID="@obj.UserID" id="btnEdit" class="text-center text-decoration-none w-100 rounded px-2 py-1">Edit</a>
+                            </div>
+                            <div class="col-2 right_bd d-flex align-items-center justify-content-center">
+                                <a href="" id="btnDelete" class="text-center text-decoration-none w-100 rounded px-2 py-1">Delete</a>
+                            </div>
+                            <div class="col-2 right_bd d-flex align-items-center justify-content-start">
+                                @if(obj.Role == "Admin")
+                                {
+                                    <label class="text-white">Yes</label>
+                                }
+                                else
+                                {
+                                    <label class="text-white">No</label>
+                                }
+
+                            </div>
+                        </div>
+                    }
+
+                    
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

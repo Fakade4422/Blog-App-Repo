@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "_SignAuthLayout";
+}
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center align-items-center w-100 ms-2">
+        <div class="col-md-5 col-12 m-0 p-0">
+            <form method="post" enctype="multipart/form-data" class="p-4">
+                <h3 class="text-white text fw-bold w-100">Sign-Up:</h3>
+                <div class="row mb-3 px-2 w-100">
+                    <div class="row px-2">
+                        <p class="alert_message error rounded">This is the error message</p>
+                    </div>
+                    <div class="row">
+                        <input type="text" class="form-control mb-2 w-100" id="firstname" placeholder="First Name">
+                    </div>
+                    <div class="row">
+                        <input type="text" class="form-control mb-2 w-100 inputs" id="lastname" placeholder="Last Name">
+                    </div>
+                    <div class="row">
+                        <input type="text" class="form-control mb-2 w-100" id="username" placeholder="Username">
+                    </div>
+                    <div class="row">
+                        <input type="email" class="form-control mb-2 w-100 inputs" id="email" placeholder="Email">
+                    </div>
+                    <div class="row">
+                        <input type="password" class="form-control mb-2 w-100" id="createPassword" placeholder="Create Password">
+                    </div>
+                    <div class="row">
+                        <input type="password" class="form-control mb-2 w-100 inputs" id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                    <div class="row m-0 p-0 w-100 ">
+                        <div class="col-md-6 col-8 m-0 p-0">
+                            <label class="text-start m-0 p-0 avatar_text">Use Avatar</label>
+                            <input type="file" class="form-control mb-2 inputs" id="file">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mb-2 ps-2 btn_submit w-100">
+                    <div class="col-md-3 col-11 m-0 p-0 ">
+                        <button class="form-control" id="btn" type="submit" href="/index.html">Sign-Up</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Already have an account? <a asp-controller="Home" asp-action="SignIn" class="text-decoration-underline" id="sign_upLink"> Sign-In</a></label>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+

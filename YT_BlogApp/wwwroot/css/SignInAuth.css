@@ -1,0 +1,143 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Tajawal:wght@200;300;400;500;700;800;900&family=Varela+Round&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Tajawal", serif;
+    /* border: 2px solid white; */
+}
+
+.container-fluid {
+    height: 100vh;
+    width: 100%;
+    background: rgb(19, 22, 78);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .container-fluid h3 {
+        align-self: flex-start;
+    }
+
+#btn {
+    color: white;
+    border: none;
+    background: rgba(85, 83, 228, 0.804);
+}
+
+.btn_submit {
+    height: 90%;
+    width: 15%;
+}
+
+#username {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #username::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#password {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #password::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#firstname {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #firstname::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#lastname {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #lastname::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#email {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #email::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#createPassword {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #createPassword::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#confirmPassword {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #confirmPassword::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+#file {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background: rgb(39, 39, 125);
+}
+
+    #file::placeholder {
+        color: rgb(199, 196, 196);
+    }
+
+label {
+    color: white;
+    font-size: 14px;
+}
+
+.avatar_text {
+    color: rgb(177, 183, 185);
+    font-size: 1.2rem;
+}
+
+#sign_upLink {
+    text-decoration: none;
+}
+
+.alert_message {
+    background: rgb(246, 82, 82);
+    padding: 0.8rem 1rem;
+    color: rgb(255, 201, 201);
+    font-weight: 600;
+    font-family: "Tajawal", serif;
+}

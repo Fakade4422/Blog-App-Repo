@@ -1,0 +1,338 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Tajawal:wght@200;300;400;500;700;800;900&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sanchez:ital@0;1&family=Tajawal:wght@200;300;400;500;700;800;900&family=Varela+Round&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Tajawal", serif;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Tajawal", serif;
+    /* border: 2px solid white; */
+}
+
+
+/*-------Nav Bar Styling-------------*/
+
+.home_body {
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    color: rgb(89, 89, 89);
+    overflow-x: hidden;
+    background: rgb(19, 22, 78);
+}
+
+.container {
+    margin: 0 auto;
+}
+
+section {
+    margin-top: 3rem;
+    width: 100vw;
+}
+
+
+.nav___Links {
+    text-decoration: none;
+    color: white;
+    transition: all 300ms ease;
+}
+
+.img_class {
+    display: block;
+    width: 100%;
+    object-fit: fill;
+}
+
+.nav_nav {
+    background: rgb(86, 83, 228);
+    width: 100vw;
+    height: 4.5rem;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1rem 1rem rgba(0,0,0,0.2)
+}
+
+nav button {
+    display: none;
+}
+
+
+/*----Small screen styling----*/
+@media screen and (max-width: 1024px) {
+    nav button {
+        display: flex;
+        justify-content: end;
+        display: block;
+        font-size: 1rem;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+    }
+
+        nav button#close_nav-btn {
+            display: none;
+        }
+
+    .nav_container {
+        position: relative;
+        margin: 0;
+    }
+
+    .nav_items {
+        position: absolute;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        top: 100%;
+        right: 0;
+        width: 8rem;
+        align-items: start;
+        justify-content: center;
+        gap: 0;
+        background-color: rgb(24, 29, 121);
+        display: none;
+        opacity: 0; /*----turn this to 1 if you want to see the nav items----*/
+    }
+
+        .nav_items li {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border-top: 2px solid rgb(19, 22, 78);
+            box-shadow: 60%;
+            animation: animateDropdown 4s 0s ease forwards;
+            opacity: 0;
+            transform-origin: top;
+        }
+
+            .nav_items li:nth-child(2) {
+                animation-delay: 200ms;
+            }
+
+            .nav_items li:nth-child(3) {
+                animation-delay: 400ms;
+            }
+
+            .nav_items li:nth-child(4) {
+                animation-delay: 600ms;
+            }
+
+            .nav_items li:nth-child(5) {
+                animation-delay: 800ms;
+            }
+
+    @keyframes animateDropdown {
+        0% {
+            transform: rotateX(90deg);
+        }
+
+        100% {
+            transform: rotateX(0deg);
+            opacity: 1;
+        }
+    }
+
+    .nav_items li a {
+        width: 100%;
+        border-radius: 0;
+        height: 100%;
+        background: rgb(30, 35, 129);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav_profile {
+        background-color: rgb(24, 29, 121);
+    }
+
+        .nav_profile ul {
+            top: 100%;
+            width: 100%;
+        }
+
+        .nav_profile .avatar {
+            border: 0;
+        }
+
+    /*------BLOG-------------*/
+    .search_Bar {
+        width: 100%;
+    }
+}
+
+
+/*------------END of small screen styling----------------*/
+
+.nav_container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 0.3rem solid rgb(19, 22, 78);
+}
+
+.nav_logo {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.nav_items {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.nav_profile {
+    position: relative;
+    cursor: pointer;
+}
+
+    .nav_profile ul {
+        position: absolute;
+        top: 125%;
+        right: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 3rem 3rem rgba(0,0,0,0.4);
+        background: rgb(121, 121, 121);
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.6s;
+    }
+
+    /*-- show nav ul when nav profile profile is hovered--*/
+    .nav_profile:hover > ul {
+        visibility: visible;
+        opacity: 1;
+    }
+
+
+    .nav_profile ul li a {
+        padding: 0.8rem;
+        background: rgb(33, 37, 112);
+        display: block;
+        width: 100%;
+    }
+
+    .nav_profile ul li:last-child a {
+        background: rgb(255, 83, 83);
+        color: rgb(239, 239, 239);
+    }
+
+.nav___Links:hover {
+    text-decoration: underline;
+}
+
+.nav_logout:hover {
+    text-decoration: underline;
+}
+
+/*-------Nav Bar Styling-------------*/
+
+/*-------Body Styling-------------*/
+
+.featured_img {
+    border-radius: 115px 0 115px 0;
+    height: 370px;
+    border: 15px solid rgb(45, 50, 148);
+}
+
+
+
+
+
+/*------Admin -----------*/
+
+.adminBody {
+    margin-top: 7rem;
+}
+
+.admin_outline_border {
+    background: rgb(45, 50, 148);
+    height: fit-content;
+}
+
+.alert_message {
+    background: rgb(246, 82, 82);
+    padding: 0.8rem 1rem;
+    color: rgb(255, 201, 201);
+    font-weight: 600;
+    font-family: "Tajawal", serif;
+}
+
+.aside_background a {
+    text-decoration: none;
+    font-weight: 700;
+    font-family: "Tajawal", serif;
+    color: white;
+    min-height: 4.5rem;
+    font-size: 1rem;
+    background: rgb(86, 83, 228);
+    margin-bottom: 3px;
+}
+
+    .aside_background a:hover {
+        background: rgba(48, 53, 149, 0.923);
+    }
+
+.admin_tableTop_Background {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    background: rgba(69, 74, 167, 0.923);
+    min-height: 2.5rem;
+    border-right: 3px solid rgba(48, 53, 149, 0.923);
+    padding-top: 0.5rem;
+}
+
+.admin_data_for_tbl {
+    font-weight: 600;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    min-height: 2rem;
+}
+
+.admin_data_for_tbl_User {
+    font-weight: 600;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    min-height: 3.5rem;
+}
+
+.right_bd {
+    border-right: 5px solid rgb(45, 50, 148);
+    border-bottom: 2px solid rgba(69, 74, 167, 0.923);
+}
+
+#btnEdit {
+    color: white;
+    font-weight: 500;
+    border: none;
+    background: rgb(86, 83, 228);
+}
+
+    #btnEdit:hover {
+        color: black;
+        background: rgb(255, 255, 255);
+    }
+
+
+#btnDelete {
+    color: white;
+    font-weight: 500;
+    border: none;
+    background: rgba(255, 17, 17, 0.804);
+}

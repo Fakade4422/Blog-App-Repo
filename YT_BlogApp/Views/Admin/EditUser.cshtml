@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "_AdminCRUDLayout";
+}
+@model Blog.Administrator.Models.tblUser
+
+<div class="row mt-5 d-flex justify-content-center align-items-center w-100 ms-2">
+    <div class="col-md-9 col-12 ">
+
+        <form asp-action="EditUser" method="post" enctype="multipart/form-data" class="py-4">
+            <h3 class="text-white ms-2 fw-bold mt-2 w-100">Edit User:</h3>
+            <div class="row mb-1 px-2 mt-4">
+                <div class="row">
+                    <!--NB!!!!--When editing don't forget the id so that we don't loose the id in the process-->
+                    <input asp-for="@Model.UserID" name="UserID" type="text" hidden>
+
+                    <div class="col-md-6 col-12">
+                        <input asp-for="@Model.Name" name="Name" type="text" class="form-control mb-2 w-100" id="firstname" placeholder="First Name">
+                    </div>
+                    <div class="col-md-6 col-12 ">
+                        <input asp-for="@Model.Surname" name="Surname" type="text" class="form-control mb-2 w-100 inputs" id="lastname" placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-6 col-12 ">
+                        <input asp-for="@Model.Username" name="Username" type="text" class="form-control mb-2 w-100" id="username" placeholder="Username">
+                    </div>
+                    <div class="col-md-6 col-12 ">
+                        <input asp-for="@Model.Email" name="Email" type="text" class="form-control mb-2 w-100 inputs" id="email" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-6 col-12 ">
+                        <input type="password" class="form-control mb-2 w-100" id="createPassword" placeholder="Create Password">
+                    </div>
+                    <div class="col-md-6 col-12 ">
+                        <input type="password" class="form-control mb-2 w-100 inputs" id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                    <input asp-for="@Model.Password" name="Password" type="password" id="txtPassword" hidden />
+                </div>
+
+                <div class="row mb-1 h-100">
+                    <div class="col-md-6 col-12 ">
+                        <select asp-for="@Model.Role" id="myPostDropdown" class="p-2 mb-2 w-100 rounded">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="Author">Author</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-12 ">
+                        <select asp-for="Gender" id="myPostDropdown" class="p-2 mb-2 w-100 rounded">
+                            <option value="" disabled selected>Select Title</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row mb-1 h-100">
+                    <div class="col-md-6 col-12 ">
+                        <label for="username" class="form-label">Date of Birth</label>
+                        <input asp-for="DOB" class="form-control mb-2 w-100" id="username" type="date" placeholder="Date Of Birth" />
+                    </div>
+
+                </div>
+
+                <div class="row mt-2 w-100 ">
+                    <div class="col-md-6 col-8 ">
+                        <label for="file" class="text-start fs-6  avatar_text">Add Avatar</label>
+                        <input name="file" asp-for="Picture" type="file" accept="image/*" class="form-control mt-1 inputs" id="file">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6 col-8 ">
+                        <p class="alert_message error rounded">This is the error message</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row mb-2 ps-2 btn_submit w-100">
+                <div class="col-md-3 col-12 ">
+                    <input type="submit" class="form-control text-center text-decoration-none addUSER_btn" id="btn" value="Edit User" />
+                </div>
+            </div>
+
+        </form>
+
+
+
+    </div>
+
+</div>
+

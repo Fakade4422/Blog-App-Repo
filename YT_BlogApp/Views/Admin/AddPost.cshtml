@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "_AdminCRUDLayout";
+}
+@model Blog.Administrator.Models.Category_Posts
+
+<div class="row d-flex justify-content-center align-items-center w-100 ms-2">
+    <div class="col-md-7 col-12 m-0 p-0">
+        <form method="post" asp-action="AddPost" enctype="multipart/form-data" class="p-4">
+            <h3 class="text-white text fw-bold w-100">Add Post:</h3>
+
+            <div class="row mb-3 px-2 w-100">
+
+                <div class="row mb-1">
+                    <p class="alert_message error rounded">This is the error message</p>
+                </div>
+
+                <div class="row mb-1">
+                    <input asp-for="@Model.Posts.PostTitle" type="text" class="form-control mb-2 w-100" id="txt_Title" placeholder="Title">
+                </div>
+
+                <div class="row mb-1 h-100">
+
+                    @* -------------------Code for the drop down menu ----------------------------------- *@
+
+                    @{
+                        SelectList categories = new SelectList(Model.Categories, "CategoryID", "CategoryTitle");
+                    }
+
+                    @Html.DropDownListFor(e => e.SelectedCategoryId, categories, "Select Category for the Post", new { @id = "myPostDropdown", @class = "form-select mb-2 w-100 rounded" })
+
+                    
+                </div>
+
+                <div class="row txt_post_body">
+                    <textarea asp-for="Posts.PostBody" class="form-control mb-2 h-100 w-100" placeholder="Body" id="txt_TextArea"></textarea>
+                </div>
+
+                <div class="row mt-2 mb-1">
+                    <div class="col-5 m-0 p-0">
+                        <input asp-for="Posts.Featured" type="checkbox" id="cbx_featured" placeholder="Featured">
+                        <label for="cbx_featured" class="text-white fs-6" style="color: rgba(116, 116, 116, 0.795);">Featured</label>
+                    </div>
+                </div>
+
+                <div class="row mt-2 w-100 ">
+                    <div class="col-md-6 col-8 m-0 p-0">
+                        <label for="file" class="text-start fs-6 m-0 p-0 avatar_text">Add Thumbnail</label>
+                        <input asp-for="Posts.Thumbnail" type="file" class="form-control mt-1 inputs" accept="image/*" id="file">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-2 ps-2 btn_submit w-100">
+                <div class="col-md-3 col-11 m-0 p-0 ">
+                    <input type="submit" id="btn" value="Add Post" class="form-control" />
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
