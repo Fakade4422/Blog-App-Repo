@@ -85,7 +85,6 @@ namespace YT_BlogApp.Controllers
                 }
 
                 byte[] filedata = null;
-                // Check if a file was uploaded
                 if (categoryposts.Posts.File != null && categoryposts.Posts.File.Length != 0)
                 {
                     using (var ms = new MemoryStream())
@@ -93,6 +92,7 @@ namespace YT_BlogApp.Controllers
                         await categoryposts.Posts.File.CopyToAsync(ms);
                         filedata = ms.ToArray();
                     }
+
                     categoryposts.Posts.Thumbnail = filedata;
                 }
 
