@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.Administrator.Models
 {
@@ -13,14 +8,15 @@ namespace Blog.Administrator.Models
     {
         [Key]
         public int PostID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Post Title is required")]
         public string PostTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Post Body is required")]
         public string PostBody { get; set; }
         [Required]
         public bool Featured { get; set; }
+        [Required(ErrorMessage = "Thumbnail file is required.")]
+        [DataType(DataType.Upload)]
         public IFormFile? File { get; set; }
-        [Required]
         public byte[]? Thumbnail { get; set; }
 
         [ForeignKey("CategoryID")]

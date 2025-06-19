@@ -63,6 +63,7 @@ namespace YT_BlogApp.Controllers
                     categoryposts.Posts.Thumbnail = filedata;
                 }
 
+                
                 ///gets the selected category description from the selected ID and populates it///////
                 var selectedCategory = (await _adminRepo.GetAllCategory())
                            .FirstOrDefault(c => c.CategoryID == categoryposts.Posts.CategoryID);

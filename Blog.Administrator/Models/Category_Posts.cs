@@ -6,6 +6,5 @@ namespace Blog.Administrator.Models
     {
         public Posts? Posts { get; set; }
         public IEnumerable<Category>? Categories { get; set; }
-        public int SelectedCategoryId { get; set; }// This will hold the selected category ID
     }
 }
