@@ -21,13 +21,10 @@
                 <div class="row mb-1 h-100">
 
                     @* -------------------Code for the drop down menu ----------------------------------- *@
-
                     @{
                         SelectList categories = new SelectList(Model.Categories, "CategoryID", "CategoryTitle");
                     }
-
-                    @Html.DropDownListFor(e => e.SelectedCategoryId, categories, "Select Category for the Post", new { @id = "myPostDropdown", @class = "form-select mb-2 w-100 rounded" })
-
+                    @Html.DropDownListFor(e => e.Posts.CategoryID, categories, "Select Category", new { @id = "myPostDropdown", @class = "form-select mb-2 w-100 rounded" })
                     
                 </div>
 
@@ -45,7 +42,7 @@
                 <div class="row mt-2 w-100 ">
                     <div class="col-md-6 col-8 m-0 p-0">
                         <label for="file" class="text-start fs-6 m-0 p-0 avatar_text">Add Thumbnail</label>
-                        <input asp-for="Posts.Thumbnail" type="file" class="form-control mt-1 inputs" accept="image/*" id="file">
+                        <input asp-for="Posts.File" type="file" class="form-control mt-1 inputs" accept="image/*" id="file">
                     </div>
                 </div>
 

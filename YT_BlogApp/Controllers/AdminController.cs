@@ -42,39 +42,6 @@ namespace YT_BlogApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPost(Category_Posts categoryposts)
         {
-            //try
-            //{
-            //    byte[] filedata = null;
-            //    if (category_Posts.Posts.File != null && category_Posts.Posts.File.Length != 0)
-            //    {
-            //        using (var ms = new MemoryStream())
-            //        {
-            //            await category_Posts.Posts.File.CopyToAsync(ms);
-            //            filedata = ms.ToArray();
-            //        }
-            //        category_Posts.Posts.Thumbnail = filedata;
-            //    }
-
-            //    if (ModelState.IsValid)
-            //    {
-            //        bool addPost = await _adminRepo.AddPost(category_Posts);
-            //        TempData["AddPostSuccessMsg"] = "Add post was successfull";
-            //        return RedirectToAction(nameof(ManagePosts));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    TempData["AddPostSuccessMsg"] = "Add post was successfull";
-            //}
-
-
-            //Category_Posts categoryPosts = new Category_Posts()
-            //{
-            //    Posts = category_Posts.Posts,
-            //    Categories = await _adminRepo.GetAllCategory()
-            //};
-
-
             try
             {
                 // Check if the Posts object exists
@@ -96,17 +63,30 @@ namespace YT_BlogApp.Controllers
                     categoryposts.Posts.Thumbnail = filedata;
                 }
 
+                ///gets the selected category description from the selected ID and populates it///////
+                var selectedCategory = (await _adminRepo.GetAllCategory())
+                           .FirstOrDefault(c => c.CategoryID == categoryposts.Posts.CategoryID);
+                categoryposts.Posts.CategoryTitle = selectedCategory.CategoryTitle;
+                //////////////////////////////////////////////////////////////////////////////////////////////
+
+                if (ModelState.IsValid)
+                {
+                    bool addPost = await _adminRepo.AddPost(categoryposts);
+                    TempData["AddPostSuccessMsg"] = "Add post was successfull";
+                    return RedirectToAction(nameof(ManagePosts));
+                }
+
                 // Rest of your logic to save the post...
                 // Make sure to return something at the end
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
+                TempData["AddPostSuccessMsg"] = "Add post was not successfull";
                 // Log the exception
                 return View("Error");
             }
 
-            //return View(categoryPosts);
         }
         public async Task<ActionResult> AddPost()
         {
