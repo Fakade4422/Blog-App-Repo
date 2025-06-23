@@ -6,3 +6,13 @@ To create the database and other functionalities i used SQL Server.
 For the Frontend I used Html, CSS, Bootstrap and Javascript.
 For the backend I mainly used C.net asp MVC core on Visual Studio
 The project files and database file have been uploaded on the repostory.
+========================================================================================================================
+Steps to import the Database on your Microsoft SQL Server:
+1. Open SQL Server
+2. Right-Click on 'Database Folder'
+3. Select 'Import Data-tier Application'
+4. Click Next
+5. Browse and select the 'BlogYTDB.bacpac' file
+6. Rename Database, If you want.
+7. Click Next and finish set up
+8. DONE...........
