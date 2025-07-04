@@ -6,11 +6,11 @@
 <div class="row d-flex justify-content-center align-items-center w-100 ms-2">
     <div class="col-md-7 col-12 m-0 p-0">
         <form method="post" asp-action="EditPost" enctype="multipart/form-data" class="p-4">
-            <h3 class="text-white text fw-bold w-100">Add Post:</h3>
+            <h3 class="text-white text fw-bold w-100">Update Post:</h3>
 
             <div class="row mb-3 px-2 w-100">
                 <!--NB!!!!--When editing don't forget the id so that we don't loose the id in the process-->
-                <input asp-for="@Model.Posts.PostID" name="PostID" type="text" hidden>
+                <input asp-for="Posts.PostID" type="text" hidden>
 
                 <div class="row mb-1">
                     <p class="alert_message error rounded">This is the error message</p>
@@ -52,7 +52,7 @@
 
             <div class="row mb-2 ps-2 btn_submit w-100">
                 <div class="col-md-3 col-11 m-0 p-0 ">
-                    <input type="submit" id="btn" value="Add Post" class="form-control" />
+                    <input type="submit" id="btn" value="Update Post" class="form-control" />
                 </div>
             </div>
 

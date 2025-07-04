@@ -28,6 +28,6 @@ namespace Blog.Administrator.Repository
         /*---- GET BY ID OPERATIONS -------*/
         Task<tblUser> GetUserById(int id);
         Task<Category> GetCategoryById(int id);
-        Task<Category_Posts> GetPostsById(int id);
+        Task<Posts> GetPostsById(int id);
     }
 }

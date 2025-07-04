@@ -70,9 +70,11 @@ namespace Blog.Administrator.Repository
             return result.FirstOrDefault();
         }
 
-        public async Task<Category_Posts> GetPostsById(int id)
+        public async Task<Posts> GetPostsById(int id)
         {
-            IEnumerable<Category_Posts> result = await _db.GetData<Category_Posts, dynamic>("sp_GetPostById", new { PostID = id });
+            //IEnumerable<Category_Posts> result = await _db.GetData<Category_Posts, dynamic>("sp_GetPostById", new { PostID = id });
+            //return result.FirstOrDefault();
+            var result = await _db.GetData<Posts, dynamic>("sp_GetPostById", new { PostID = id });
             return result.FirstOrDefault();
         }
 

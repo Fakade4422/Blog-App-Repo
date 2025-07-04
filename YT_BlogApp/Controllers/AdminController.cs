@@ -106,20 +106,25 @@ namespace YT_BlogApp.Controllers
                 return NotFound();
             }
 
-            Category_Posts post = await _adminRepo.GetPostsById(id);
+            // Get the record information of the selected post, 
+            var postResult = await _adminRepo.GetPostsById(id); 
 
-            if (post == null)
+            if (postResult == null)
             {
                 return NotFound();
             }
 
-            Category_Posts category_Posts = new Category_Posts()
+            // Create and populate the full Category_Posts view model
+            ////using this method because in the view we use this type of 2_dimensional model.
+            ///Allows us to accomodate every object in it  
+            var viewModel = new Category_Posts 
             {
-                Posts = new Posts(),
-                Categories = await _adminRepo.GetAllCategory()
+                Posts = postResult, ////This will be the final population of the post object and it's needed information
+                Categories = await _adminRepo.GetAllCategory() //This allows us to populate the combo box
             };
 
-            return View(post);
+            return View(viewModel);
+
         }
 
         [HttpPost]
@@ -155,9 +160,8 @@ namespace YT_BlogApp.Controllers
             }
 
             return View(category_Posts);
+
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
