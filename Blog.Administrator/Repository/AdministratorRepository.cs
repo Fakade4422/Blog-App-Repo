@@ -70,7 +70,11 @@ namespace Blog.Administrator.Repository
             return result.FirstOrDefault();
         }
 
-
+        public async Task<Category_Posts> GetPostsById(int id)
+        {
+            IEnumerable<Category_Posts> result = await _db.GetData<Category_Posts, dynamic>("sp_GetPostById", new { PostID = id });
+            return result.FirstOrDefault();
+        }
 
 
 
@@ -191,5 +195,27 @@ namespace Blog.Administrator.Repository
             }
         }
 
+
+        public async Task<bool> UpdatePost(Category_Posts category_Posts)
+        {
+            try
+            {
+                await _db.SaveData("sp_UPDATE_Post", new
+                {
+                    category_Posts.Posts.PostID,
+                    category_Posts.Posts.PostTitle,
+                    category_Posts.Posts.PostBody,
+                    category_Posts.Posts.Thumbnail,
+                    category_Posts.Posts.Featured,
+                    category_Posts.Posts.CategoryID
+
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

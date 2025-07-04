@@ -99,10 +99,65 @@ namespace YT_BlogApp.Controllers
             return View(category_Posts);
         }
 
-        public IActionResult EditPost()
+        public async Task<ActionResult> EditPost(int id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Category_Posts post = await _adminRepo.GetPostsById(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            Category_Posts category_Posts = new Category_Posts()
+            {
+                Posts = new Posts(),
+                Categories = await _adminRepo.GetAllCategory()
+            };
+
+            return View(post);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPost(Category_Posts category_Posts)
+        {
+            try
+            {
+                byte[] filedata = null;
+                if (category_Posts.Posts.File != null && category_Posts.Posts.File.Length != 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await category_Posts.Posts.File.CopyToAsync(ms);
+                        filedata = ms.ToArray();
+                    }
+
+                    category_Posts.Posts.Thumbnail = filedata;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    bool updatePost = await _adminRepo.UpdatePost(category_Posts);
+                    TempData["PostUpdatedMessageSuccess"] = "Post Record Successfully Updated";
+                    return RedirectToAction(nameof(ManagePosts));
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View(category_Posts);
+            }
+
+            return View(category_Posts);
+        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

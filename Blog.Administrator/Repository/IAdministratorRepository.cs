@@ -23,9 +23,11 @@ namespace Blog.Administrator.Repository
         Task<bool> UpdateCategory(Category category);
 
         Task<bool> AddPost(Category_Posts  category_Posts);
+        Task<bool> UpdatePost(Category_Posts category_Posts);
 
         /*---- GET BY ID OPERATIONS -------*/
         Task<tblUser> GetUserById(int id);
         Task<Category> GetCategoryById(int id);
+        Task<Category_Posts> GetPostsById(int id);
     }
 }

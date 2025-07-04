@@ -68,7 +68,8 @@
                                 <p class="text-white">@obj.CategoryTitle</p>
                             </div>
                             <div class="col-2 right_bd d-flex align-items-center justify-content-center">
-                                <a asp-controller="Admin" asp-action="EditPost" id="btnEdit" class="text-center text-decoration-none w-100 rounded px-2 py-1">Edit</a>
+                                <!-- The "asp-route-ID" allows us access to only get the selected record information to update-->
+                                <a asp-controller="Admin" asp-action="EditPost" asp-route-ID="@obj.PostID" id="btnEdit" class="text-center text-decoration-none w-100 rounded px-2 py-1">Edit</a>
                             </div>
                             <div class="col-2 right_bd d-flex align-items-center justify-content-center">
                                 <a href="" id="btnDelete" class="text-center text-decoration-none w-100 rounded px-2 py-1">Delete</a>
