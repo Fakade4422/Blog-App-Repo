@@ -18,12 +18,15 @@ namespace Blog.Administrator.Repository
         /*---- CRUD Operations ------*/
         Task<bool> AddUser (tblUser user);
         Task<bool> UpdateUser (tblUser user);
+        Task<bool> DeleteUser (int id);
 
         Task<bool> AddCategory(Category category);
         Task<bool> UpdateCategory(Category category);
+        Task<bool> DeleteCategory(int id);
 
         Task<bool> AddPost(Category_Posts  category_Posts);
         Task<bool> UpdatePost(Category_Posts category_Posts);
+        Task<bool> DeletePost(int id);
 
         /*---- GET BY ID OPERATIONS -------*/
         Task<tblUser> GetUserById(int id);

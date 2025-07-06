@@ -137,6 +137,19 @@ namespace Blog.Administrator.Repository
             }
         }
 
+        public async Task<bool> DeleteUser(int id)
+        {
+            try
+            {
+                await _db.SaveData("sp_DeleteUser", new { UserID = id });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
 
         public async Task<bool> AddCategory(Category category)
         {
@@ -174,6 +187,21 @@ namespace Blog.Administrator.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<bool> DeleteCategory(int id)
+        {
+            try
+            {
+                await _db.SaveData("sp_DeleteCategory", new { CategoryID = id });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+
         }
 
 
@@ -219,5 +247,20 @@ namespace Blog.Administrator.Repository
                 return false;
             }
         }
+
+        public async Task<bool> DeletePost(int id)
+        {
+            try
+            {
+                await _db.SaveData("sp_DeletePost", new { PostID = id });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
     }
 }

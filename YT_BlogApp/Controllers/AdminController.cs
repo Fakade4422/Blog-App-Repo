@@ -163,6 +163,46 @@ namespace YT_BlogApp.Controllers
 
         }
 
+        public async Task<ActionResult> DeletePost(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var post = await _adminRepo.GetPostsById(id);  /*-Finds the record we want to delete-*/
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+            else
+            {   /*-These 'TempData's storages will be used for the pop-up delete message ----*/
+                TempData["PostID"] = post.PostID;
+                TempData["PostTitle"] = post.PostTitle;
+                return RedirectToAction("ManagePosts");
+            }
+
+
+        }
+
+        /*---This action will be placed in the ajax method in the .html view file ----*/
+        public async Task<ActionResult> DeletePostConfirmed(int id)
+        {
+            try
+            {   /*---This code will call the repository action that deletes the category ----*/
+                await _adminRepo.DeletePost(id);
+                return Json(new { success = true, message = "Post deleted successfully!" });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while deleting the record: " + ex.Message });
+            }
+
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(tblUser user)
@@ -264,6 +304,48 @@ namespace YT_BlogApp.Controllers
             return View(user);
         }
 
+
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var user = await _adminRepo.GetUserById(id);  /*-Finds the record we want to delete-*/
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {   /*-These 'TempData's storages will be used for the pop-up delete message ----*/
+                TempData["UserID"] = user.UserID;
+                TempData["UserName"] = user.Name + " " + user.Surname;
+                return RedirectToAction("ManageUser");
+            }
+
+
+        }
+
+        /*---This action will be placed in the ajax method in the .html view file ----*/
+        public async Task<ActionResult> DeleteUserConfirmed(int id)
+        {
+            try
+            {   /*---This code will call the repository action that deletes the category ----*/
+                await _adminRepo.DeleteUser(id);
+                return Json(new { success = true, message = "User deleted successfully!" });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while deleting the record: " + ex.Message });
+            }
+
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddCategory(Category category)
@@ -296,6 +378,8 @@ namespace YT_BlogApp.Controllers
         {
             return View();
         }
+
+        ///-----Edit-----------
         public async Task<ActionResult> EditCategory(int id)
         {
             if (id == null || id == 0)
@@ -340,5 +424,47 @@ namespace YT_BlogApp.Controllers
 
             return View(category);
         }
+
+        ///-----DELETE-----------
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var category = await _adminRepo.GetCategoryById(id);  /*-Finds the record we want to delete-*/
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+            else
+            {   /*-These 'TempData's storages will be used for the pop-up delete message ----*/
+                TempData["CategoryID"] = category.CategoryID;
+                TempData["CategoryTitle"] = category.CategoryTitle;
+                return RedirectToAction("ManageCategory");
+            }
+
+
+        }
+
+        /*---This action will be placed in the ajax method in the .html view file ----*/
+        public async Task<ActionResult> DeleteCategoryConfirmed(int id)  
+        {
+            try
+            {   /*---This code will call the repository action that deletes the category ----*/
+                await _adminRepo.DeleteCategory(id);
+                return Json(new { success = true, message = "Category deleted successfully!" });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while deleting the record: " + ex.Message });
+            }
+
+        }
+
+
     }
 }
