@@ -73,7 +73,7 @@ namespace YT_BlogApp.Controllers
                 if (ModelState.IsValid)
                 {
                     bool addPost = await _adminRepo.AddPost(categoryposts);
-                    TempData["AddPostSuccessMsg"] = "Add post was successfull";
+                    TempData["SuccessMsg"] = "Add post was successfull";
                     return RedirectToAction(nameof(ManagePosts));
                 }
 
@@ -83,7 +83,7 @@ namespace YT_BlogApp.Controllers
             }
             catch (Exception ex)
             {
-                TempData["AddPostSuccessMsg"] = "Add post was not successfull";
+                TempData["ErrorMsg"] = "Add post was not successfull";
                 // Log the exception
                 return View("Error");
             }
@@ -148,7 +148,7 @@ namespace YT_BlogApp.Controllers
                 if (ModelState.IsValid)
                 {
                     bool updatePost = await _adminRepo.UpdatePost(category_Posts);
-                    TempData["PostUpdatedMessageSuccess"] = "Post Record Successfully Updated";
+                    TempData["SuccessMsg"] = "Post Record Successfully Updated.";
                     return RedirectToAction(nameof(ManagePosts));
 
                 }
@@ -156,6 +156,7 @@ namespace YT_BlogApp.Controllers
             }
             catch (Exception ex)
             {
+                TempData["ErrorMsg"] = "There was an error with adding the post.";
                 return View(category_Posts);
             }
 
@@ -225,7 +226,7 @@ namespace YT_BlogApp.Controllers
                 if (ModelState.IsValid)
                 {
                     bool addUser = await _adminRepo.AddUser(user);
-                    TempData["AddUserSuccess"] = "The New User has been added successfully";
+                    TempData["SuccessMsg"] = "The New User has been added successfully";
                     return RedirectToAction(nameof(ManageUser));
                 }
 
@@ -233,7 +234,7 @@ namespace YT_BlogApp.Controllers
             }
             catch (Exception ex)
             {
-                TempData["AddUserMsg"] = "Adding User was unsuccessfull";
+                TempData["ErrorMsg"] = "Adding User was unsuccessfull";
             }
             return View(user);
 
@@ -290,7 +291,7 @@ namespace YT_BlogApp.Controllers
                 if (ModelState.IsValid)
                 {
                     bool updateUser = await _adminRepo.UpdateUser(user);
-                    TempData["UserUpdatedMessageSuccess"] = "User Record Successfully Edited";
+                    TempData["SuccessMsg"] = "User Record Successfully Edited";
                     return RedirectToAction(nameof(ManageUser));
 
                 }
@@ -357,7 +358,7 @@ namespace YT_BlogApp.Controllers
                     bool addCategory = await _adminRepo.AddCategory(category);
                     if (addCategory)
                     {
-                        TempData["CategoryAddedSuccess"] = "Category has been added successfully";
+                        TempData["SuccessMsg"] = "Category has been added successfully";
                         return RedirectToAction(nameof(ManageCategory));
                     }
                     else
@@ -368,7 +369,7 @@ namespace YT_BlogApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["AddCategoryMsg"] = "Adding Category was unsuccessfull";
+                    TempData["ErrorMsg"] = "Adding Category was unsuccessfull";
                 }
             }
 
@@ -412,7 +413,7 @@ namespace YT_BlogApp.Controllers
                 if (ModelState.IsValid)
                 {
                     bool updateCategory = await _adminRepo.UpdateCategory(category);
-                    TempData["CategoryUpdatedMessageSuccess"] = "Category Record Successfully Edited";
+                    TempData["SuccessMsg"] = "Category Record Successfully Edited";
                     return RedirectToAction(nameof(ManageCategory));
 
                 }
