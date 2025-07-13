@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Author.Repository
+namespace Blog.Auth.Repository
 {
-    public class AuthorRepository:IAuthorRepository
+    public class AuthRepository:IAuthRepository
     {
     }
 }
