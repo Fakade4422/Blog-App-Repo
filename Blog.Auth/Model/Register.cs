@@ -8,5 +8,6 @@ namespace Blog.Auth.Model
 {
     public class Register
     {
+        public string RepeatPassword { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Blog.Administrator.Repository;
 using Blog_DatabaseAccess.SqlDataAccess;
 using Blog.Auth.Repository;
 using Blog.Author.Repository;
+using YT_BlogApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 
@@ -10,17 +11,21 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(option => option.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IAuthorRepository, AuthorRepository>();
+builder.Services.AddTransient<IUserInfoServices, UserInfoServices>();
+// Register IHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
-            options.LoginPath = "/Home/Login";
-            options.AccessDeniedPath = "/Home/Login";
+            options.LoginPath = "/Home/SignIn";
+            options.AccessDeniedPath = "/Home/SignIn";
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Optional: Set cookie expiration
         });
 
 

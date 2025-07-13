@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+/*---Authentication-----*/
+using Blog.Auth.Model;
+using Blog_DatabaseAccess.SqlDataAccess;
+using System.Net.Mail;
 
 namespace Blog.Administrator.Repository
 {
@@ -261,6 +265,69 @@ namespace Blog.Administrator.Repository
             }
 
         }
+
+        /*-----Authentication for User -----------*/
+        public async Task<bool> ValidateEmail(string emailAddress)
+        {
+            try
+            {
+                IEnumerable<User> user = await _db.GetData<User, dynamic>("sp_ValidateEmailAddress", new { Email = emailAddress });
+                if (user.Count() > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+
+        public async Task<bool> NewActiveUser(ActiveUser activeUser)
+        {
+            try
+            {
+                await _db.SaveData("sp_NewActiveUser", new
+                {
+                    activeUser.UserID,
+                    activeUser.TimeLoggedIn,
+                    activeUser.DayLogggedIn
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+        public async Task<bool> LogOutActiveUser(ActiveUser activeUser)
+        {
+            try
+            {
+                await _db.SaveData("sp_LogOutActiveUser", new
+                {
+                    activeUser.UserID,
+                    activeUser.TimeLoggedOut,
+
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
 
     }
 }

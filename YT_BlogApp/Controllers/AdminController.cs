@@ -3,16 +3,29 @@ using Blog.Administrator.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Hosting;
-
+///Authentication///
+using Blog.Auth.Model;
+using YT_BlogApp.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+////
 
 namespace YT_BlogApp.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IAdministratorRepository _adminRepo;
-        public AdminController(IAdministratorRepository adminRepo)
+        ///Authentication <summary>
+        private readonly int UserID;
+        private readonly IUserInfoServices _userService;
+
+        public AdminController(IAdministratorRepository adminRepo, IUserInfoServices userService)
         {
             _adminRepo = adminRepo;
+            //Authentication
+            _userService = userService;
+            UserID = _userService.GetLoggedInUser();
         }
 
         public IActionResult Landing()

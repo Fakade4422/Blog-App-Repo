@@ -32,5 +32,10 @@ namespace Blog.Administrator.Repository
         Task<tblUser> GetUserById(int id);
         Task<Category> GetCategoryById(int id);
         Task<Posts> GetPostsById(int id);
+
+        /*----Authentication For User -------*/
+        Task<bool> ValidateEmail(string emailAddress);
+        Task<bool> NewActiveUser(ActiveUser activeUser);
+        Task<bool> LogOutActiveUser(ActiveUser activeUser);
     }
 }

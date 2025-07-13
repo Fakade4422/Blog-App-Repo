@@ -1,20 +1,52 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using YT_BlogApp.Models;
+//Authentication
+using Blog.Auth.Model;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Blog.Auth.Repository;
+using YT_BlogApp.Services;
+using Blog.Administrator.Repository;
+using Blog.Administrator.Models;
+using System.Net.Mail;
+using BCrypt.Net;
+using System.Text.RegularExpressions;
 
 namespace YT_BlogApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        //Authentication
+        private readonly IAuthRepository _authRepo;
+        private readonly IAdministratorRepository _adminRepo;
+        private readonly IUserInfoServices _userServices;
+        int OTP;
+        User user;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAuthRepository authRepo, IAdministratorRepository adminRepo, IUserInfoServices userServices)
         {
             _logger = logger;
+            _authRepo = authRepo;
+            _adminRepo = adminRepo;
+            _userServices = userServices;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                string role = await _userServices.GetRole();
+
+                if (role == "Admin")
+                {
+                    return RedirectToAction("ManagePosts","Admin");
+                }
+
+            }
+
             return View();
         }
         public IActionResult Blog()
@@ -32,9 +64,73 @@ namespace YT_BlogApp.Controllers
         {
             return View();
         }
-        public IActionResult SignIn()
+
+        /*---Authentication, For the sign in page  ------*/
+        public IActionResult SignIn(string returnUrl = "/")
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn(Login login)
+        {
+            if (!ModelState.IsValid)
+            {
+                user = await _authRepo.ValidateUser(login);
+                bool validatePassword = false;
+
+                if (user != null)
+                {
+                    validatePassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
+                }
+
+                if (user == null || validatePassword == false)
+                {
+                    ViewBag.Message = "Invalid Email or password";
+                    return View(login);
+                }
+                else
+                {
+                    if (user.Role == "Admin")
+                    {
+                        login.ReturnUrl = "/Adminstrator/ManagePosts";
+                    }
+
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.Role)
+                    };
+
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                        new AuthenticationProperties()
+                        {
+                            IsPersistent = login.RememberMe
+                        });
+
+                    ActiveUser activeUser = new ActiveUser();
+                    activeUser.UserID = user.UserID;
+                    activeUser.TimeLoggedIn = DateTime.Now;
+                    activeUser.DayLogggedIn = DateTime.Today;
+                    await _adminRepo.NewActiveUser(activeUser);
+                    //return LocalRedirect(login.ReturnUrl);
+                    return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
+
+
+                }
+
+
+            }
+            else
+            {
+                ViewBag.Message = "Invalid Email or Password";
+            }
+
+            return View(login);
         }
 
         public IActionResult SignUp()
