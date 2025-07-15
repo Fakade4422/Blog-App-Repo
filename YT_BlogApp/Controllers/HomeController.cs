@@ -75,14 +75,29 @@ namespace YT_BlogApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(Login login)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 user = await _authRepo.ValidateUser(login);
                 bool validatePassword = false;
 
                 if (user != null)
                 {
-                    validatePassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
+                    if (user.Password.StartsWith("$2a$") || user.Password.StartsWith("$2b$") || user.Password.StartsWith("$2y$"))
+                    {
+                        validatePassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
+                    }
+                    else
+                    {
+                        // Temporary: Handle plaintext passwords during transition
+                        validatePassword = user.Password == login.Password;
+                        if (validatePassword)
+                        {
+                            // Hash and update the password
+                            user.Password = BCrypt.Net.BCrypt.HashPassword(login.Password);
+                            await _authRepo.UpdateUserPassword(user); // Add UpdateUser to IAuthRepository
+                        }
+                    }
+     
                 }
 
                 if (user == null || validatePassword == false)
@@ -104,13 +119,13 @@ namespace YT_BlogApp.Controllers
                         new Claim(ClaimTypes.Role, user.Role)
                     };
 
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
-                        new AuthenticationProperties()
-                        {
-                            IsPersistent = login.RememberMe
-                        });
+                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    //var principal = new ClaimsPrincipal(identity);
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                    //    new AuthenticationProperties()
+                    //    {
+                    //        IsPersistent = login.RememberMe
+                    //    });
 
                     ActiveUser activeUser = new ActiveUser();
                     activeUser.UserID = user.UserID;

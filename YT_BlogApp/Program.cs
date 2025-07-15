@@ -14,12 +14,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(option => option.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
-builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IAuthorRepository, AuthorRepository>();
 builder.Services.AddTransient<IUserInfoServices, UserInfoServices>();
+
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();//Authentication
+
+/*----Hashing passwords------*/
+builder.Services.AddTransient<PasswordMigrationService>(); // Register PasswordMigrationService
+builder.Services.AddLogging(); // Add logging for migration
+/*--------*/
+
 // Register IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
+////Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
@@ -27,9 +35,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             options.AccessDeniedPath = "/Home/SignIn";
             options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Optional: Set cookie expiration
         });
-
+///-----
 
 var app = builder.Build();
+
+/*-----Hash keys for passwords*-------*/
+// Run the password migration (only in development or once)
+if (app.Environment.IsDevelopment()) // Optional: Run only in development
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var migrationService = scope.ServiceProvider.GetService<PasswordMigrationService>();
+        await migrationService.HashExistingPasswords();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

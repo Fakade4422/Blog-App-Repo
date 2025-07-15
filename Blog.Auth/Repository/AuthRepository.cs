@@ -22,8 +22,8 @@ namespace Blog.Auth.Repository
             {
                 IEnumerable<User> user = await _db.GetData<User, dynamic>("sp_ValidateUser", new
                 {
-                    login.Email
-
+                    login.Email,
+                    login.Password
 
                 });
 
@@ -92,6 +92,23 @@ namespace Blog.Auth.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<bool> UpdateUserPassword(User user)
+        {
+            try
+            {
+                await _db.SaveData("sp_UpdatePasswordHASH", new 
+                {   user.UserID, 
+                    user.Password 
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
         }
 
     }

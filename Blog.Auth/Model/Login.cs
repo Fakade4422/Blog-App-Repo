@@ -16,8 +16,8 @@ namespace Blog.Auth.Model
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Keep me Logged in")]
-        public bool RememberMe { get; set; } = true;
+        //[Display(Name = "Keep me Logged in")]
+        //public bool RememberMe { get; set; } = true;
 
         public string? ReturnUrl { get; set; }
     }

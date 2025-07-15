@@ -19,19 +19,33 @@ namespace YT_BlogApp.Controllers
         ///Authentication <summary>
         private readonly int UserID;
         private readonly IUserInfoServices _userService;
+        private readonly PasswordMigrationService _passwordMigrationService;
 
-        public AdminController(IAdministratorRepository adminRepo, IUserInfoServices userService)
+        //Migrate Passwords with HashKeys
+
+
+        public AdminController(IAdministratorRepository adminRepo, IUserInfoServices userService, PasswordMigrationService migration)
         {
             _adminRepo = adminRepo;
             //Authentication
             _userService = userService;
             UserID = _userService.GetLoggedInUser();
+            _passwordMigrationService = migration;
         }
 
         public IActionResult Landing()
         {
             return View();
         }
+
+        /*---------Hash keys, Migrating the passwords---------------*/
+        public async Task<IActionResult> MigratePasswords()
+        {
+            await _passwordMigrationService.HashExistingPasswords();
+            return Ok("Passwords migrated successfully.");
+        }
+        /*--------------------------------------------------*/
+
 
         public async Task<IActionResult> ManagePosts()
         {

@@ -13,5 +13,7 @@ namespace Blog.Auth.Repository
         Task<User> GetLoggedInUser(int id);
         Task<User> FindByEmail(string email);
         Task<bool> ResetPassword(string resetPassword, int UserID);
+
+        Task<bool> UpdateUserPassword(User user);//Used to Implement hashing of passwords, to ensure security////
     }
 }
