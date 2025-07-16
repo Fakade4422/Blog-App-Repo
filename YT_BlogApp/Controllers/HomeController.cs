@@ -75,9 +75,13 @@ namespace YT_BlogApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(Login login)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                user = await _authRepo.ValidateUser(login);
+                ViewBag.Message = "Invalid Email or Password";
+                return View(login);
+            }
+
+                var user = await _authRepo.ValidateUser(login);
                 bool validatePassword = false;
 
                 if (user != null)
@@ -127,23 +131,33 @@ namespace YT_BlogApp.Controllers
                     //        IsPersistent = login.RememberMe
                     //    });
 
-                    ActiveUser activeUser = new ActiveUser();
-                    activeUser.UserID = user.UserID;
-                    activeUser.TimeLoggedIn = DateTime.Now;
-                    activeUser.DayLogggedIn = DateTime.Today;
+
+                    // Log active user
+                    ActiveUser activeUser = new ActiveUser
+                    {
+                        UserID = user.UserID,
+                        TimeLoggedIn = DateTime.Now,
+                        DayLogggedIn = DateTime.Today
+                    };
                     await _adminRepo.NewActiveUser(activeUser);
-                    //return LocalRedirect(login.ReturnUrl);
-                    return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
+
+                    // Redirect based on role
+                    if (user.Role == "Admin")
+                    {
+                        return RedirectToAction("ManagePosts", "Admin");
+                    }
+
+
+                    //ActiveUser activeUser = new ActiveUser();
+                    //activeUser.UserID = user.UserID;
+                    //activeUser.TimeLoggedIn = DateTime.Now;
+                    //activeUser.DayLogggedIn = DateTime.Today;
+                    //await _adminRepo.NewActiveUser(activeUser);
+                    ////return LocalRedirect(login.ReturnUrl);
+                    //return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
 
 
                 }
-
-
-            }
-            else
-            {
-                ViewBag.Message = "Invalid Email or Password";
-            }
 
             return View(login);
         }

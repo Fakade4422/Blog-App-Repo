@@ -22,8 +22,7 @@ namespace Blog.Auth.Repository
             {
                 IEnumerable<User> user = await _db.GetData<User, dynamic>("sp_ValidateUser", new
                 {
-                    login.Email,
-                    login.Password
+                    login.Email
 
                 });
 
