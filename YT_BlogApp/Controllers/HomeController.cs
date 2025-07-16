@@ -113,7 +113,7 @@ namespace YT_BlogApp.Controllers
                 {
                     if (user.Role == "Admin")
                     {
-                        login.ReturnUrl = "/Adminstrator/ManagePosts";
+                        login.ReturnUrl = "/Admin/ManagePosts";
                     }
 
                     var claims = new List<Claim>()
@@ -123,43 +123,42 @@ namespace YT_BlogApp.Controllers
                         new Claim(ClaimTypes.Role, user.Role)
                     };
 
-                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    //var principal = new ClaimsPrincipal(identity);
-                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
-                    //    new AuthenticationProperties()
-                    //    {
-                    //        IsPersistent = login.RememberMe
-                    //    });
+                //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                //var principal = new ClaimsPrincipal(identity);
+                //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                //    new AuthenticationProperties()
+                //    {
+                //        IsPersistent = login.RememberMe
+                //    });
 
 
-                    // Log active user
-                    ActiveUser activeUser = new ActiveUser
-                    {
-                        UserID = user.UserID,
-                        TimeLoggedIn = DateTime.Now,
-                        DayLogggedIn = DateTime.Today
-                    };
+                //// Log active user
+                //ActiveUser activeUser = new ActiveUser
+                //{
+                //    UserID = user.UserID,
+                //    TimeLoggedIn = DateTime.Now,
+                //    DayLogggedIn = DateTime.Today
+                //};
+                //await _adminRepo.NewActiveUser(activeUser);
+
+                //// Redirect based on role
+                //if (user.Role == "Admin")
+                //{
+                //    return RedirectToAction("ManagePosts", "Admin");
+                //}
+
+
+                    ActiveUser activeUser = new ActiveUser();
+                    activeUser.UserID = user.UserID;
+                    activeUser.TimeLoggedIn = DateTime.Now;
+                    activeUser.DayLoggedIn = DateTime.Today;
                     await _adminRepo.NewActiveUser(activeUser);
-
-                    // Redirect based on role
-                    if (user.Role == "Admin")
-                    {
-                        return RedirectToAction("ManagePosts", "Admin");
-                    }
-
-
-                    //ActiveUser activeUser = new ActiveUser();
-                    //activeUser.UserID = user.UserID;
-                    //activeUser.TimeLoggedIn = DateTime.Now;
-                    //activeUser.DayLogggedIn = DateTime.Today;
-                    //await _adminRepo.NewActiveUser(activeUser);
-                    ////return LocalRedirect(login.ReturnUrl);
-                    //return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
+                    //return LocalRedirect(login.ReturnUrl);
+                    return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
 
 
                 }
 
-            return View(login);
         }
 
         public IActionResult SignUp()

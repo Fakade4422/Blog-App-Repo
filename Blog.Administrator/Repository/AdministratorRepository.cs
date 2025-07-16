@@ -298,7 +298,7 @@ namespace Blog.Administrator.Repository
                 {
                     activeUser.UserID,
                     activeUser.TimeLoggedIn,
-                    activeUser.DayLogggedIn
+                    activeUser.DayLoggedIn
                 });
                 return true;
             }

@@ -12,7 +12,7 @@ namespace Blog.Administrator.Models
         public int UserID { get; set; }
         public DateTime TimeLoggedIn { get; set; }
         public DateTime TimeLoggedOut { get; set; }
-        public DateTime DayLogggedIn { get; set; }
+        public DateTime DayLoggedIn { get; set; }
         public float? Duration { get;}
     }
 }
