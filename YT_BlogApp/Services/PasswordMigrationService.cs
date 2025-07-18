@@ -38,8 +38,8 @@ namespace YT_BlogApp.Services
                     {
                         string hashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-                        const string updatePassword = "UPDATE User_tbl SET Password = @Password WHERE UserID = @Id";
-                        await _db.SaveData(updatePassword, new { UserID = user.UserID, Password = hashPassword });
+                        //const string updatePassword = "UPDATE User_tbl SET Password = @Password WHERE UserID = @Id";
+                        await _db.SaveData("sp_UpdatePasswordHASH", new { UserID = user.UserID, Password = hashPassword });
                         //const string updateQuery = "UPDATE Users SET Password = @Password WHERE Id = @Id";
                         //await _dbConnection.ExecuteAsync(updateQuery, new { Id = user.Id, Password = hashedPassword });
                     }//end of If
