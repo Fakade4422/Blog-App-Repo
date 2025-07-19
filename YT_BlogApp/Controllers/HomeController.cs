@@ -36,16 +36,6 @@ namespace YT_BlogApp.Controllers
 
         public async Task <IActionResult> Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                string role = await _userServices.GetRole();
-
-                if (role == "Admin")
-                {
-                    return RedirectToAction("ManagePosts","Admin");
-                }
-
-            }
 
             return View();
         }
@@ -111,11 +101,9 @@ namespace YT_BlogApp.Controllers
                 }
                 else
                 {
-                    //if (user.Role == "Admin")
-                    //{
-                    //    login.ReturnUrl = "/Admin/ManagePosts";
-                    //}
 
+                    try
+                    {
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
@@ -123,49 +111,45 @@ namespace YT_BlogApp.Controllers
                         new Claim(ClaimTypes.Role, user.Role)
                     };
 
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
                     new AuthenticationProperties()
                     {
                         IsPersistent = login.RememberMe
                     });
 
-
-                try
-                {
                     ActiveUser activeUser = new ActiveUser
-                    {
-                        ActiveUserID = user.UserID,
-                        TimeLoggedIn = DateTime.Now,
-                        DayLoggedIn = DateTime.Today
-                    };
-                    await _adminRepo.NewActiveUser(activeUser);
+                        {
+                            UserID = user.UserID,
+                            TimeLoggedIn = DateTime.Now,
+                            DayLoggedIn = DateTime.Today
+                        };
+                        await _adminRepo.NewActiveUser(activeUser);
 
-                    if (user.Role == "Admin")
-                    {
-                        return RedirectToAction("ManagePosts", "Admin");
+
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            string role = await _userServices.GetRole();
+
+                            if (role == "Admin" && user.Role == "Admin")
+                            {
+                                return RedirectToAction("ManagePosts", "Admin");
+                            }
+
+                        }
+                    
+                        return RedirectToAction("Index", "Home"); // Fallback redirect
                     }
-                    return RedirectToAction("Index", "Home"); // Fallback redirect
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "An error occurred during sign-in. Please try again.";
+                        _logger.LogError(ex, "Error during sign-in for user {Email}", user.Email);
+                        return View(login);
+                    }
+
+
                 }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "An error occurred during sign-in. Please try again.";
-                    _logger.LogError(ex, "Error during sign-in for user {Email}", user.Email);
-                    return View(login);
-                }
-
-
-                //ActiveUser activeUser = new ActiveUser();
-                //    activeUser.UserID = user.UserID;
-                //    activeUser.TimeLoggedIn = DateTime.Now;
-                //    activeUser.DayLoggedIn = DateTime.Today;
-                //    await _adminRepo.NewActiveUser(activeUser);
-                //    //return LocalRedirect(login.ReturnUrl);
-                //    return RedirectToAction(login.ReturnUrl.Split('/')[2], login.ReturnUrl.Split('/')[1]);
-
-
-            }
                
         }
 

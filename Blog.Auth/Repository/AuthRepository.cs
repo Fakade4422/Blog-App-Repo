@@ -43,7 +43,7 @@ namespace Blog.Auth.Repository
             {
                 IEnumerable<User> user = await _db.GetData<User, dynamic>("sp_GetLoggedInUser", new
                 {
-                    EmployeeID = id
+                    UserID = id
                 });
 
 
