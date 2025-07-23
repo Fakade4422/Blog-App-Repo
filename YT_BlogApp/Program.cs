@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         {
             options.LoginPath = "/Home/SignIn";
             options.AccessDeniedPath = "/Home/SignIn";
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Optional: Set cookie expiration
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(20); // Optional: Set cookie expiration
         });
 ///-----
 

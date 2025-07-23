@@ -34,7 +34,7 @@ namespace YT_BlogApp.Controllers
             _userServices = userServices;
         }
 
-        public async Task <IActionResult> Index()
+        public IActionResult Index()
         {
 
             return View();
@@ -104,42 +104,42 @@ namespace YT_BlogApp.Controllers
 
                     try
                     {
-                    var claims = new List<Claim>()
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Role, user.Role)
-                    };
-
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
-                    new AuthenticationProperties()
-                    {
-                        IsPersistent = login.RememberMe
-                    });
-
-                    ActiveUser activeUser = new ActiveUser
+                        var claims = new List<Claim>()
                         {
-                            UserID = user.UserID,
-                            TimeLoggedIn = DateTime.Now,
-                            DayLoggedIn = DateTime.Today
+                            new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
+                            new Claim(ClaimTypes.Email, user.Email),
+                            new Claim(ClaimTypes.Role, user.Role)
                         };
-                        await _adminRepo.NewActiveUser(activeUser);
 
-
-                        if (User.Identity.IsAuthenticated)
-                        {
-                            string role = await _userServices.GetRole();
-
-                            if (role == "Admin" && user.Role == "Admin")
+                            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var principal = new ClaimsPrincipal(identity);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                            new AuthenticationProperties()
                             {
-                                return RedirectToAction("ManagePosts", "Admin");
-                            }
+                                IsPersistent = login.RememberMe
+                            });
 
-                        }
+                        ActiveUser activeUser = new ActiveUser
+                            {
+                                UserID = user.UserID,
+                                TimeLoggedIn = DateTime.Now,
+                                DayLoggedIn = DateTime.Today
+                            };
+                            await _adminRepo.NewActiveUser(activeUser);
+
+
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                string role = await _userServices.GetRole();
+
+                                if (role == "Admin" && user.Role == "Admin")
+                                {
+                                    return RedirectToAction("ManagePosts", "Admin");
+                                }
+
+                            }
                     
-                        return RedirectToAction("Index", "Home"); // Fallback redirect
+                            return RedirectToAction("Index", "Home"); // Fallback redirect
                     }
                     catch (Exception ex)
                     {
